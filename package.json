@@ -1,0 +1,43 @@
+{
+  "name": "airit",
+  "version": "1.0.0",
+  "description": "Share files btw MAC, Windows and Linux",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ki-Ke/airit.git"
+  },
+  "keywords": [
+    "airit",
+    "share",
+    "files"
+  ],
+  "author": "Keerthi Niranjan <keerthiniranjan16@gmail.com>",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/Ki-Ke/airit/issues"
+  },
+  "homepage": "https://github.com/Ki-Ke/airit#readme",
+  "dependencies": {
+    "electron": "^1.6.10",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-promise-middleware": "^4.3.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.3.0",
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.8",
+    "tsify": "^3.0.1",
+    "typescript": "^2.3.3",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.9.0"
+  }
+}

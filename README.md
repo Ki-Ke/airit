@@ -1,2 +1,2 @@
 # airit
-Share files with MAC, Windows and linux
+Share files btw MAC, Windows and Linux
