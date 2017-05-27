@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb",
+  "extends": "eslint:recommended",
   "rules": {
     "comma-dangle": [
       2,
@@ -31,6 +31,5 @@
     "es6": true
   },
   "globals": {
-    "toastr": true
   }
 }
