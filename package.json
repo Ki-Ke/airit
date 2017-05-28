@@ -4,7 +4,7 @@
   "description": "Share files btw MAC, Windows and Linux",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -36,9 +36,11 @@
     "eslint": "^4.0.0-beta.0",
     "eslint-plugin-react": "^7.0.1",
     "gulp": "^3.9.1",
-    "gulp-util": "^3.0.8",
-    "tsify": "^3.0.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-typescript": "^3.1.7",
+    "gulp-uglify": "^3.0.0",
     "typescript": "^2.3.3",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.9.0"
   }
