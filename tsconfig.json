@@ -1,9 +1,16 @@
 {
   "files": [
-    "src/*.ts"
+    "src/*.ts",
+    "src/**/*.ts"
   ],
   "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es6",
     "noImplicitAny": true,
-    "target": "es6"
+    "experimentalDecorators": true,
+    "declaration": true,
+    "noImplicitReturns": true,
+    "removeComments": false,
+    "preserveConstEnums": true
   }
 }

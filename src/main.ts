@@ -14,3 +14,38 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
  */
+'use strict';
+
+import {app, BrowserWindow} from 'electron';
+
+let mainWindow: any;
+
+app.on('ready', createWindow);
+
+function createWindow() {
+
+    const browserOptions = {
+        width: 500,
+        height: 500,
+        maximizeable: false
+    };
+    mainWindow = new BrowserWindow(browserOptions);
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
+
+    // Emitted when the window is closed.
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    });
+}
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (mainWindow === null) {
+        createWindow();
+    }
+});

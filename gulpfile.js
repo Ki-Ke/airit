@@ -8,13 +8,16 @@ const gUtil = require('gulp-util');
 const buffer = require('vinyl-buffer');
 const babelify = require('babelify');
 const eslint = require('gulp-eslint');
-
+const run = require('gulp-run');
 
 const project = ts.createProject('tsconfig.json');
 const paths = {
     pages: ['src/*.html'],
     reactApp: ['src/app/app.jsx'],
-    jsx: ['src/app/**/*.jsx']
+    jsx: ['src/app/*.jsx', 'src/app/**/*.jsx'],
+    scss: ['src/app/styles/*.scss', 'src/app/styles/**/*.scss'],
+    allJs: ['src/*.ts', 'src/**/*.ts', 'src/app/*.jsx', 'src/app/**/*.jsx'],
+    vendor: ['./src/vendor.js']
 };
 
 // Gulp task for HTML
@@ -32,8 +35,7 @@ gulp.task('watch:html', () => {
 gulp.task('build:js', () => {
     return project.src()
         .pipe(project())
-        .js.pipe(uglify())
-        .pipe(gulp.dest('dist'))
+        .js.pipe(gulp.dest('dist'))
         .on('error', gulpError);
 });
 
@@ -54,16 +56,12 @@ gulp.task('lint', () => {
 });
 
 gulp.task('watch:js', () => {
-    gulp.watch([
-        'main.ts',
-        'src/**/*.ts',
-        'src/app/**/*.jsx'
-    ], ['build:js']);
+    gulp.watch(paths.allJs, ['build:js']);
 });
 
 // Gulp for node modules
 gulp.task('build:vendor', () => {
-    browserify({entries: ['./src/vendor.js']})
+    browserify({entries: paths.vendor})
         .bundle()
         .pipe(source('vendor.js'))
         .pipe(buffer())
@@ -73,14 +71,14 @@ gulp.task('build:vendor', () => {
 
 // Gulp for scss
 gulp.task('build:css', () => {
-    return gulp.src('src/styles/**/*.scss')
+    return gulp.src(paths.scss)
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('dist/styles'))
         .on('error', gulpError);
 });
 
 gulp.task('watch:css', () => {
-    gulp.watch('src/**/*.scss', ['build:css']);
+    gulp.watch(paths.scss, ['build:css']);
 });
 
 function gulpError(error) {
@@ -90,4 +88,6 @@ function gulpError(error) {
 gulp.task('build', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor', 'lint']);
 gulp.task('watch', ['watch:html', 'watch:js', 'watch:css']);
 
-gulp.task('default', ['build', 'watch']);
+gulp.task('default', ['build', 'watch'], () => {
+    run('electron src/main.js').exec();
+});

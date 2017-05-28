@@ -23,3 +23,5 @@ require('react-redux');
 require('react-router');
 require('redux-promise-middleware');
 require('redux-thunk');
+
+// Electron Dependence
