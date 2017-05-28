@@ -14,3 +14,12 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
  */
+
+// React Dependence
+require('react');
+require('redux');
+require('react-dom');
+require('react-redux');
+require('react-router');
+require('redux-promise-middleware');
+require('redux-thunk');
