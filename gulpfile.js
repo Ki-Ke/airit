@@ -6,19 +6,19 @@ const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const gUtil = require('gulp-util');
 const buffer = require('vinyl-buffer');
-const notify = require('gulp-notify');
+const react = require('gulp-react');
 
 const project = ts.createProject('tsconfig.json');
 const paths = {
-    pages: ['src/*.html']
+    pages: ['src/*.html'],
+    jsx: ['src/app/*.jsx', 'src/app/**/*.jsx']
 };
 
 // Gulp task for HTML
 gulp.task('build:html', () => {
     return gulp.src(paths.pages)
         .pipe(gulp.dest('dist'))
-        .on('error', gulpError)
-        .pipe(notify({message: 'HTML task complete'}));
+        .on('error', gulpError);
 });
 
 gulp.task('watch:html', () => {
@@ -31,15 +31,21 @@ gulp.task('build:js', () => {
         .pipe(project())
         .js.pipe(uglify())
         .pipe(gulp.dest('dist'))
-        .on('error', gulpError)
-        .pipe(notify({message: 'JS task complete'}));
+        .on('error', gulpError);
+});
+
+// Gulp task for jsx
+gulp.task('build:jsx', () => {
+    gulp.src(paths.jsx)
+        .pipe(react())
+        .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch:js', () => {
     gulp.watch([
         'main.ts',
         'src/**/*.ts',
-        'src/**/*.jsx'
+        'src/app/**/*.jsx'
     ], ['build:js']);
 });
 
@@ -51,8 +57,7 @@ gulp.task('build:vendor', () => {
         .pipe(buffer())
         .pipe(uglify({ mangle: false }))
         .pipe(gulp.dest('dist'))
-        .on('error', gulpError)
-        .pipe(notify({message: 'Vendor task complete'}));
+        .on('error', gulpError);
 });
 
 // Gulp for scss
@@ -60,8 +65,7 @@ gulp.task('build:css', () => {
     return gulp.src('src/styles/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('dist/styles'))
-        .on('error', gulpError)
-        .pipe(notify({message: 'CSS task complete'}));
+        .on('error', gulpError);
 });
 
 gulp.task('watch:css', () => {
@@ -72,7 +76,7 @@ function gulpError(error) {
     gUtil.log(error);
 }
 
-gulp.task('build', ['build:html', 'build:js', 'build:css', 'build:vendor']);
+gulp.task('build', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor']);
 gulp.task('watch', ['watch:html', 'watch:js', 'watch:css']);
 
 gulp.task('default', ['build', 'watch']);

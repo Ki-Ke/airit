@@ -38,6 +38,7 @@
     "eslint-plugin-react": "^7.0.1",
     "gulp": "^3.9.1",
     "gulp-notify": "^3.0.0",
+    "gulp-react": "^3.1.0",
     "gulp-sass": "^3.1.0",
     "gulp-typescript": "^3.1.7",
     "gulp-uglify": "^3.0.0",
