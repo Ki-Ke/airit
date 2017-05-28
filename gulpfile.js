@@ -85,9 +85,11 @@ function gulpError(error) {
     gUtil.log(error);
 }
 
-gulp.task('build', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor', 'lint']);
+gulp.task('generate', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor', 'lint']);
 gulp.task('watch', ['watch:html', 'watch:js', 'watch:css']);
 
-gulp.task('default', ['build', 'watch'], () => {
-    run('electron src/main.js').exec();
+gulp.task('default', ['generate', 'watch'], () => {
+    run('electron dist/main.js').exec();
 });
+
+gulp.task('build', ['generate']);

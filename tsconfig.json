@@ -5,7 +5,8 @@
   ],
   "compilerOptions": {
     "moduleResolution": "node",
-    "target": "es6",
+    "target": "es5",
+    "jsx": "react",
     "noImplicitAny": true,
     "experimentalDecorators": true,
     "declaration": true,
