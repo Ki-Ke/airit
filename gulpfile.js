@@ -6,12 +6,15 @@ const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const gUtil = require('gulp-util');
 const buffer = require('vinyl-buffer');
-const react = require('gulp-react');
+const babelify = require('babelify');
+const eslint = require('gulp-eslint');
+
 
 const project = ts.createProject('tsconfig.json');
 const paths = {
     pages: ['src/*.html'],
-    jsx: ['src/app/*.jsx', 'src/app/**/*.jsx']
+    reactApp: ['src/app/app.jsx'],
+    jsx: ['src/app/**/*.jsx']
 };
 
 // Gulp task for HTML
@@ -36,9 +39,18 @@ gulp.task('build:js', () => {
 
 // Gulp task for jsx
 gulp.task('build:jsx', () => {
-    gulp.src(paths.jsx)
-        .pipe(react())
+    browserify(paths.reactApp, {debug: true})
+        .transform(babelify)
+        .bundle()
+        .pipe(source('app.js'))
+        .pipe(buffer())
         .pipe(gulp.dest('dist'));
+});
+
+gulp.task('lint', () => {
+    gulp.src(paths.jsx)
+        .pipe(eslint())
+        .pipe(eslint.format());
 });
 
 gulp.task('watch:js', () => {
@@ -53,9 +65,8 @@ gulp.task('watch:js', () => {
 gulp.task('build:vendor', () => {
     browserify({entries: ['./src/vendor.js']})
         .bundle()
-        .pipe(source('vendor.min.js'))
+        .pipe(source('vendor.js'))
         .pipe(buffer())
-        .pipe(uglify({ mangle: false }))
         .pipe(gulp.dest('dist'))
         .on('error', gulpError);
 });
@@ -76,7 +87,7 @@ function gulpError(error) {
     gUtil.log(error);
 }
 
-gulp.task('build', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor']);
+gulp.task('build', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor', 'lint']);
 gulp.task('watch', ['watch:html', 'watch:js', 'watch:css']);
 
 gulp.task('default', ['build', 'watch']);
