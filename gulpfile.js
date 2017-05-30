@@ -3,12 +3,12 @@ const browserify = require('browserify');
 const source = require('vinyl-source-stream');
 const ts = require('gulp-typescript');
 const sass = require('gulp-sass');
-const uglify = require('gulp-uglify');
 const gUtil = require('gulp-util');
 const buffer = require('vinyl-buffer');
 const babelify = require('babelify');
 const eslint = require('gulp-eslint');
 const run = require('gulp-run');
+const del = require('del');
 
 const project = ts.createProject('tsconfig.json');
 const paths = {
@@ -19,6 +19,8 @@ const paths = {
     allJs: ['src/*.ts', 'src/**/*.ts', 'src/app/*.jsx', 'src/app/**/*.jsx'],
     vendor: ['./src/vendor.js']
 };
+
+del.sync('dist/**');
 
 // Gulp task for HTML
 gulp.task('build:html', () => {
