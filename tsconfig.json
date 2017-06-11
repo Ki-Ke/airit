@@ -1,15 +1,16 @@
 {
   "files": [
-    "src/*.ts",
-    "src/**/*.ts"
+    "src/main.ts",
+    "src/preloadScript.ts"
   ],
   "compilerOptions": {
-    "moduleResolution": "node",
     "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "jsx": "react",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "experimentalDecorators": true,
-    "declaration": true,
+    "declaration": false,
     "noImplicitReturns": true,
     "removeComments": false,
     "preserveConstEnums": true
