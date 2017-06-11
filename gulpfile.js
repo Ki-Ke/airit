@@ -53,12 +53,11 @@ gulp.task('build:jsx', () => {
 
 gulp.task('lint', () => {
     gulp.src(paths.jsx)
-        .pipe(eslint())
-        .pipe(eslint.format());
+        .pipe(eslint());
 });
 
 gulp.task('watch:js', () => {
-    gulp.watch(paths.allJs, ['build:js']);
+    gulp.watch(paths.allJs, ['build:js', 'build:jsx']);
 });
 
 // Gulp for node modules
@@ -88,7 +87,7 @@ function gulpError(error) {
 }
 
 gulp.task('generate', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor', 'lint']);
-gulp.task('watch', ['watch:html', 'watch:js', 'watch:css']);
+gulp.task('watch', ['watch:html', 'watch:js', 'watch:css', 'lint']);
 
 gulp.task('default', ['generate', 'watch'], () => {
     run('electron dist/main.js').exec();
