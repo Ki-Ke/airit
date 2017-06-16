@@ -1,7 +1,6 @@
 const gulp = require('gulp');
 const browserify = require('browserify');
 const source = require('vinyl-source-stream');
-const ts = require('gulp-typescript');
 const sass = require('gulp-sass');
 const gUtil = require('gulp-util');
 const buffer = require('vinyl-buffer');
@@ -9,14 +8,15 @@ const babelify = require('babelify');
 const eslint = require('gulp-eslint');
 const run = require('gulp-run');
 const del = require('del');
+const ts = require('gulp-typescript');
+const tsProject = ts.createProject('tsconfig.json');
 
-const project = ts.createProject('tsconfig.json');
 const paths = {
     pages: ['src/*.html'],
     reactApp: ['src/app/app.jsx'],
     jsx: ['src/app/*.jsx', 'src/app/**/*.jsx'],
+    preload: 'src/renderer/preloadScript.ts',
     scss: ['src/app/styles/*.scss', 'src/app/styles/**/*.scss'],
-    allJs: ['src/*.ts', 'src/**/*.ts', 'src/app/*.jsx', 'src/app/**/*.jsx'],
     vendor: ['./src/vendor.js']
 };
 
@@ -33,22 +33,21 @@ gulp.task('watch:html', () => {
     gulp.watch(paths.pages, ['build:html']);
 });
 
-// Gulp task for ts
-gulp.task('build:js', () => {
-    return project.src()
-        .pipe(project())
-        .js.pipe(gulp.dest('dist'))
-        .on('error', gulpError);
-});
-
 // Gulp task for jsx
 gulp.task('build:jsx', () => {
     browserify(paths.reactApp, {debug: true})
         .transform(babelify)
         .bundle()
-        .pipe(source('app.js'))
+        .pipe(source('_app.js'))
         .pipe(buffer())
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('src'));
+});
+
+// Gulp task for preload script
+gulp.task('build:preload', () => {
+    return tsProject.src()
+        .pipe(tsProject())
+        .js.pipe(gulp.dest('src'));
 });
 
 gulp.task('lint', () => {
@@ -57,16 +56,16 @@ gulp.task('lint', () => {
 });
 
 gulp.task('watch:js', () => {
-    gulp.watch(paths.allJs, ['build:js', 'build:jsx']);
+    gulp.watch(paths.jsx, ['build:jsx']);
 });
 
 // Gulp for node modules
 gulp.task('build:vendor', () => {
     browserify({entries: paths.vendor})
         .bundle()
-        .pipe(source('vendor.js'))
+        .pipe(source('_vendor.js'))
         .pipe(buffer())
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('src'))
         .on('error', gulpError);
 });
 
@@ -86,11 +85,11 @@ function gulpError(error) {
     gUtil.log(error);
 }
 
-gulp.task('generate', ['build:html', 'build:js', 'build:jsx', 'build:css', 'build:vendor', 'lint']);
+gulp.task('generate', ['build:html', 'build:jsx', 'build:preload', 'build:css', 'build:vendor', 'lint']);
 gulp.task('watch', ['watch:html', 'watch:js', 'watch:css', 'lint']);
 
 gulp.task('default', ['generate', 'watch'], () => {
-    run('electron dist/main.js').exec();
+    run('electron .').exec();
 });
 
 gulp.task('build', ['generate']);

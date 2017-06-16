@@ -15,21 +15,24 @@
  */
 
 import { ipcRenderer, remote } from 'electron';
-import Local from './js/local';
+import Local from './local';
 
-export default class Preload {
+preload();
 
-    constructor() {
-        const local = new Local({name: 'akon'});
-        console.log(local);
+function preload() {
 
-        local.server.on('peer', (socket) => {
-            console.log(socket);
-        });
+    const local = new Local({name: 'akon'});
+    console.log(local);
 
+    local.server.on('peer', (socket) => {
+        console.log(socket);
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
         local.server.getConnections((err, count) => {
             document.getElementById('test').innerHTML = count;
             console.log(count);
         });
-    }
+    });
+
 }

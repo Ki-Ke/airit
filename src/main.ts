@@ -16,6 +16,9 @@
 'use strict';
 
 import {app, BrowserWindow} from 'electron';
+import * as path from 'path';
+
+const preloadScript = path.join(__dirname, 'renderer/preloadScript.js');
 
 let mainWindow: any;
 
@@ -24,9 +27,11 @@ app.on('ready', createWindow);
 function createWindow() {
 
     const browserOptions = {
-        width: 500,
-        height: 500,
-        maximizeable: false
+        width: 900,
+        height: 600,
+        webPreferences: {
+            preload: preloadScript
+        }
     };
     mainWindow = new BrowserWindow(browserOptions);
     mainWindow.loadURL('file://' + __dirname + '/index.html');

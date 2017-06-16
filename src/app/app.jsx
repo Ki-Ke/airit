@@ -14,8 +14,8 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
  */
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import Main from './components/main.jsx';
 

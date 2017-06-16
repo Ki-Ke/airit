@@ -1,7 +1,6 @@
 {
   "files": [
-    "src/main.ts",
-    "src/preloadScript.ts"
+    "src/renderer/preloadScript.ts"
   ],
   "compilerOptions": {
     "target": "es5",
