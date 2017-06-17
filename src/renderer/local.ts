@@ -15,8 +15,10 @@
  */
 import * as multicastdns from 'multicast-dns';
 import * as net from 'net';
-import ipAddress from 'network-address';
+import * as ipAddress from 'network-address';
 import * as _ from 'underscore';
+
+const mdns = multicastdns();
 
 export interface LocalOptions {
     name: string;
@@ -24,50 +26,18 @@ export interface LocalOptions {
 
 export default class Local {
     public server: any;
-    private mdns;
     private host: string;
     private port: number;
     private id: string;
     private connections: object;
+    private name: string;
 
     constructor(options: LocalOptions) {
 
-        const {name} = options;
-        this.mdns = multicastdns();
+        this.name = options.name;
         this.createServer();
+        this.startServer();
         this.server.peers = [];
-
-        this.server.on('listening', () => {
-            this.host = ipAddress();
-            this.port = this.server.address().port;
-            this.id = this.host + ':' + this.port;
-
-            this.mdns.on('query', (query) => {
-                _.each(query, (q) => {
-                    const qs = q['questions'];
-                    if (qs.name === name && qs.type === 'SRV') {
-                        this.respond();
-                    }
-                });
-            });
-
-            this.mdns.on('response', (response) => {
-                _.each(response, (res) => {
-                    const ans = res['answers'];
-                    if (ans.name === name && ans.type === 'SRV') {
-                        this.connect(ans.data.target, ans.data.port);
-                    }
-                });
-            });
-
-            this.update();
-            const interval = setInterval(this.update, 3000);
-
-            this.server.on('close', () => {
-                clearInterval(interval);
-            });
-
-        });
 
     }
 
@@ -77,6 +47,38 @@ export default class Local {
                 socket.destroy(err);
             });
             this.trackSocket(socket);
+        });
+    }
+
+    private startServer(): void {
+        this.server.on('listening', () => {
+            this.host = ipAddress();
+            this.port = this.server.address().port;
+            this.id = this.host + ':' + this.port;
+
+            mdns.on('query', (query) => {
+                _.each(query.questions, (questions) => {
+                    if (questions['name'] === this.name && questions['type'] === 'SRV') {
+                        this.respond();
+                    }
+                });
+            });
+
+            mdns.on('response', (response) => {
+                _.each(response.answers, (answer) => {
+                    if (answer['name'] === this.name && answer['type'] === 'SRV') {
+                        this.connect(answer['data'].target, answer['data'].port);
+                    }
+                });
+            });
+
+            this.update();
+            const interval = setInterval(this.update(), 3000);
+
+            this.server.on('close', () => {
+                clearInterval(interval);
+            });
+
         });
     }
 
@@ -92,8 +94,8 @@ export default class Local {
     }
 
     private respond(): void {
-        this.mdns.response([{
-            name,
+        mdns.response([{
+            name: this.name,
             type: 'SRV',
             data: {
                 port: this.port,
@@ -126,8 +128,8 @@ export default class Local {
         this.trackSocket(socket);
     }
 
-    private update(): void {
-        this.mdns.query([{name, type: 'SRV'}]);
+    private update() {
+        mdns.query([{name: this.name, type: 'SRV'}]);
     }
 
 }

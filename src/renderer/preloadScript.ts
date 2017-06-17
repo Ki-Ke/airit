@@ -24,11 +24,15 @@ function preload() {
     const local = new Local({name: 'akon'});
     console.log(local);
 
-    local.server.on('peer', (socket) => {
-        console.log(socket);
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
+
+        local.server.listen(0);
+
+        local.server.on('peer', (socket) => {
+            console.log(socket);
+            socket.write('Hi, ' + process.pid);
+        });
+
         local.server.getConnections((err, count) => {
             document.getElementById('test').innerHTML = count;
             console.log(count);
