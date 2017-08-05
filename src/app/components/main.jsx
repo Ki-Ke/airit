@@ -22,6 +22,7 @@ export default class Main extends React.Component {
         return(
             <div className="container">
                 <span>Welcome</span>
+                <span>{this.props.count}</span>
             </div>
         );
     }

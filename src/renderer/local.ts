@@ -29,7 +29,7 @@ export default class Local {
     private host: string;
     private port: number;
     private id: string;
-    private connections: object;
+    private connections: object = {};
     private name: string;
 
     constructor(options: LocalOptions) {

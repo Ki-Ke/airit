@@ -22,7 +22,6 @@ preload();
 function preload() {
 
     const local = new Local({name: 'akon'});
-    console.log(local);
 
     document.addEventListener('DOMContentLoaded', () => {
 
