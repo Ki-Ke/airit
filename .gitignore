@@ -2,3 +2,8 @@
 dist
 release
 node_modules
+
+# App
+/src/_app.js
+/src/_vendor.js
+/src/preloadScript.js
