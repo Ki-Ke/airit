@@ -3,8 +3,9 @@
   "copyright": "KiKe",
   "asar": true,
   "files": [
-    "dist/**/*",
-    "package.json"
+    "src",
+    "package.json",
+    "!src/app"
   ],
   "directories": {
     "buildResources": "resources",

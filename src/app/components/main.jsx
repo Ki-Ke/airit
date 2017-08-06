@@ -1,15 +1,3 @@
-"use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
 /*
  #
  # Copyright 2017 KiKe. All Rights Reserved.
@@ -26,17 +14,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
  See the License for the specific language governing permissions and
  limitations under the License.
  */
-var react_1 = require("react");
-var Main = (function (_super) {
-    __extends(Main, _super);
-    function Main() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Main.prototype.render = function () {
-        return (<div className='container'>
+import React from 'react';
+
+export default class Main extends React.Component {
+
+    render() {
+        return (
+            <div className='container'>
                 <span>Welcome</span>
                 <span>{this.props.count}</span>
-            </div>);
-    };
-    return Main;
-}(react_1.default.Component));
+            </div>
+        );
+    }
+
+}

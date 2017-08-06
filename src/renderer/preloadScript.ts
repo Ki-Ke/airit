@@ -24,18 +24,28 @@ function preload() {
     const local = new Local({name: 'akon'});
 
     document.addEventListener('DOMContentLoaded', () => {
+        initDom();
+    });
 
+    function initDom() {
         local.server.listen(0);
 
         local.server.on('peer', (socket) => {
             console.log(socket);
-            socket.write('Hi, ' + process.pid);
+            const testElement = document.getElementById('test');
+            const aTag = document.createElement('a');
+            aTag.innerHTML = 'User connected';
+            testElement.appendChild(aTag);
+        });
+
+        local.server.on('UserConnected', (socket) => {
+            alert(socket);
         });
 
         local.server.getConnections((err, count) => {
             document.getElementById('test').innerHTML = count;
             console.log(count);
         });
-    });
+    }
 
 }

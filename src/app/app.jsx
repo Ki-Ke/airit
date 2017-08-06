@@ -19,7 +19,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import Main from './components/main.tsx';
+import Main from './components/main.jsx';
 
 const store = createStore();
 

@@ -20,7 +20,7 @@ import * as _ from 'underscore';
 
 const mdns = multicastdns();
 
-export interface LocalOptions {
+export interface InterLocalOptions {
     name: string;
 }
 
@@ -32,7 +32,7 @@ export default class Local {
     private connections: object = {};
     private name: string;
 
-    constructor(options: LocalOptions) {
+    constructor(options: InterLocalOptions) {
 
         this.name = options.name;
         this.createServer();
