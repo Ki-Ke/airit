@@ -37,14 +37,6 @@
     "electron-compile": "^6.4.1",
     "multicast-dns": "^6.1.1",
     "network-address": "^1.1.2",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-redux": "^5.0.5",
-    "react-router": "^4.1.1",
-    "redux": "^3.6.0",
-    "redux-devtools-extension": "^2.13.2",
-    "redux-promise-middleware": "^4.3.0",
-    "redux-thunk": "^2.2.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
