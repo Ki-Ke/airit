@@ -32,10 +32,6 @@ function preload() {
 
         local.server.on('peer', (socket) => {
             console.log(socket);
-            const testElement = document.getElementById('test');
-            const aTag = document.createElement('a');
-            aTag.innerHTML = 'User connected';
-            testElement.appendChild(aTag);
         });
 
         local.server.on('UserConnected', (socket) => {
@@ -43,7 +39,6 @@ function preload() {
         });
 
         local.server.getConnections((err, count) => {
-            document.getElementById('test').innerHTML = count;
             console.log(count);
         });
     }

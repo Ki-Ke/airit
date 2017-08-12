@@ -56,5 +56,8 @@
         "singleline": "never"
       }
     ]
+  },
+  "ignoreRules": {
+    "TS2307": true
   }
 }

@@ -16,7 +16,6 @@
 import * as multicastdns from 'multicast-dns';
 import * as net from 'net';
 import * as ipAddress from 'network-address';
-import * as _ from 'underscore';
 
 const mdns = multicastdns();
 
@@ -57,7 +56,7 @@ export default class Local {
             this.id = this.host + ':' + this.port;
 
             mdns.on('query', (query) => {
-                _.each(query.questions, (questions) => {
+                query.questions.map((questions) => {
                     if (questions['name'] === this.name && questions['type'] === 'SRV') {
                         this.respond();
                     }
@@ -65,7 +64,7 @@ export default class Local {
             });
 
             mdns.on('response', (response) => {
-                _.each(response.answers, (answer) => {
+                response.answers.map((answer) => {
                     if (answer['name'] === this.name && answer['type'] === 'SRV') {
                         this.connect(answer['data'].target, answer['data'].port);
                     }
