@@ -1,0 +1,14 @@
+{
+  "name": "airit-ui",
+  "version": "1.0.0",
+  "description": "Core ui for the airit application",
+  "main": "app.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Keerthi Niranjan <keerthiniranjan16@gmail.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "react": "^15.6.1"
+  }
+}
