@@ -18,7 +18,7 @@
 import {app, BrowserWindow} from 'electron';
 import * as path from 'path';
 
-const preloadScript = path.join(__dirname, 'renderer/preloadScript.js');
+const preloadScript = path.join(__dirname, 'renderer/preloadLauncher.js');
 
 let mainWindow: any;
 

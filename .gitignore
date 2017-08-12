@@ -8,3 +8,5 @@ node_modules
 /src/_vendor.js
 /src/preloadScript.js
 /.cache/
+
+out/
