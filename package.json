@@ -4,9 +4,9 @@
   "description": "Share files between MAC, Windows and Linux",
   "main": "src/main.ts",
   "scripts": {
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
+    "dev": "electron-forge start",
+    "pack": "electron-forge package",
+    "publish": "electron-forge make",
     "lint": "tslint --project tsconfig.json"
   },
   "repository": {
@@ -54,7 +54,7 @@
           "squirrel"
         ],
         "darwin": [
-          "zip"
+          "dmg"
         ],
         "linux": [
           "deb",
