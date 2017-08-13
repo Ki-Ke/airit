@@ -3,7 +3,7 @@
     "src/renderer/preloadScript.ts"
   ],
   "compilerOptions": {
-    "target": "es2015",
+    "target": "es2016",
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react",
