@@ -14,8 +14,9 @@
  limitations under the License.
  */
 'use strict';
-import {app, BrowserWindow} from 'electron';
+import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
+import Config from './config';
 
 const preloadScript = path.join(__dirname, 'renderer/preloadLauncher.js');
 
@@ -34,11 +35,18 @@ function createWindow() {
     };
     mainWindow = new BrowserWindow(browserOptions);
     // mainWindow.loadURL('file://' + __dirname + '/index.html');
-    mainWindow.loadURL('http://192.168.0.110:1616');
+    mainWindow.loadURL('http://localhost:1616');
 
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
         mainWindow = null;
+    });
+
+    mainWindow.webContents.on('did-finish-load', () => {
+        const config = new Config();
+        config.readConfig().then((data) => {
+            console.log(data);
+        });
     });
 }
 

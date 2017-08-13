@@ -14,17 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import * as path from 'path';
-import { app } from 'electron';
+import * as electron from 'electron';
 import * as fs from 'fs';
 import { isMac, isWin } from './utils/misc';
 import * as childProcess from 'child_process';
+const { app } = electron;
 
 export default class Config {
 
     private configPath: string;
-    private configFileName: string = 'airit.config';
+    private configFileName: string = 'airit.json';
 
-    constructor(config) {
+    constructor(config?: string) {
 
         if (!config) {
             config = path.join(app.getPath('userData'), this.configFileName);
@@ -41,7 +42,7 @@ export default class Config {
         this.configPath = config;
     }
 
-    private readConfig(): Promise<any> {
+    public readConfig(): Promise<any> {
         return new Promise((resolve, reject) => {
 
             if (!fs.existsSync(this.configPath)) {
@@ -103,8 +104,10 @@ export default class Config {
             const globalConfigPath = path.join(__dirname, '..', `config/${this.configFileName}`);
             const userName = process.env.USER;
 
+            console.log(`${globalConfigPath}   "${userConfigPath}"`);
+
             childProcess.exec(`rsync -r "${globalConfigPath}" "${userConfigPath}"
-                && chown -R "${userName}" "${userConfigPath}"`,
+            && chown -R "${userName}" "${userConfigPath}"`,
                 {timeout: 60000}, (err) => {
                     if (err) {
                         throw(err);
