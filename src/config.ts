@@ -18,9 +18,10 @@ import * as electron from 'electron';
 import * as fs from 'fs';
 import { isMac, isWin } from './utils/misc';
 import * as childProcess from 'child_process';
-const { app } = electron;
 
-export default class Config {
+const {app} = electron;
+
+export class Config {
 
     private configPath: string;
     private configFileName: string = 'airit.json';
@@ -107,8 +108,8 @@ export default class Config {
             console.log(`${globalConfigPath}   "${userConfigPath}"`);
 
             childProcess.exec(`rsync -r "${globalConfigPath}" "${userConfigPath}"
-            && chown -R "${userName}" "${userConfigPath}"`,
-                {timeout: 60000}, (err) => {
+            && chown -R "${userName}" "${userConfigPath}"`, {timeout: 60000},
+                (err) => {
                     if (err) {
                         throw(err);
                     }

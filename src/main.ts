@@ -16,7 +16,6 @@
 'use strict';
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
-import Config from './config';
 
 const preloadScript = path.join(__dirname, 'renderer/preloadLauncher.js');
 
@@ -43,10 +42,7 @@ function createWindow() {
     });
 
     mainWindow.webContents.on('did-finish-load', () => {
-        const config = new Config();
-        config.readConfig().then((data) => {
-            console.log(data);
-        });
+        console.log('Content loaded');
     });
 }
 

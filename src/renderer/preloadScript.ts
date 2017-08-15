@@ -16,7 +16,15 @@
 
 import { ipcRenderer, remote } from 'electron';
 import Local from './local';
+import * as path from 'path';
 
+declare global {
+    interface Window {
+        aapi: any;
+    }
+}
+
+window.aapi = window.aapi || {};
 preload();
 
 function preload() {
@@ -42,5 +50,11 @@ function preload() {
             console.log(count);
         });
     }
+
+    window.aapi = {
+        Config: remote.require(path.join(__dirname, '..', 'config')).Config
+    };
+
+    Object.freeze(window.aapi);
 
 }
