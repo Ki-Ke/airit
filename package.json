@@ -4,7 +4,7 @@
   "description": "Share files between MAC, Windows and Linux",
   "main": "src/main.ts",
   "scripts": {
-    "dev": "electron-forge start",
+    "dev": "electron-compile --appDir ./airit ./src && electron-forge start",
     "pack": "electron-forge package",
     "publish": "electron-forge make",
     "lint": "tslint --project tsconfig.json"
