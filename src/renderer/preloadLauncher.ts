@@ -15,6 +15,7 @@ limitations under the License.
 */
 import { remote } from 'electron';
 
-require('electron-compile/lib/initialize-renderer').initializeRendererProcess(remote.getGlobal('globalCompilerHost').readOnlyMode);
+require('electron-compile/lib/initialize-renderer')
+    .initializeRendererProcess(remote.getGlobal('globalCompilerHost').readOnlyMode);
 
 import './preloadScript';
