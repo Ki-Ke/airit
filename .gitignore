@@ -7,3 +7,6 @@ node_modules
 /src/preloadScript.js
 
 out/
+
+# Electron compile
+.cache

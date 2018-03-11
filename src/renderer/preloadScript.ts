@@ -17,6 +17,9 @@
 import { ipcRenderer, remote } from 'electron';
 import Local from './local';
 import * as path from 'path';
+import * as fs from 'fs';
+
+const file = fs.createReadStream('/Users/kiranniranjan/Desktop/air/airit.png');
 
 declare global {
     interface Window {
@@ -29,25 +32,22 @@ preload();
 
 function preload() {
 
-    const local = new Local({name: 'akon'});
+    const local = new Local({name: 'airit'});
 
     document.addEventListener('DOMContentLoaded', () => {
         initDom();
     });
 
     function initDom() {
-        local.server.listen(0);
+        local.server.listen(1234);
 
-        local.server.on('peer', (socket) => {
-            console.log(socket);
-        });
+        local.server.on('connection', (socket) => {
+            console.log(socket.remoteAddress);
+            socket.write('Hi');
 
-        local.server.on('UserConnected', (socket) => {
-            alert(socket);
-        });
-
-        local.server.getConnections((err, count) => {
-            console.log(count);
+            socket.on('data', (data) => {
+                socket.write('Hi from kiran' + data);
+            });
         });
     }
 
