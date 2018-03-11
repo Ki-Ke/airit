@@ -15,8 +15,10 @@ limitations under the License.
 */
 const isMac = (process.platform === 'darwin');
 const isWin = (process.platform === 'win32');
+const isLinux = (process.platform === 'linux');
 
 export {
     isMac,
-    isWin
+    isWin,
+    isLinux
 };
